@@ -1,0 +1,57 @@
+package com.revature.main;
+
+import java.lang.reflect.Field;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.revature.util.ColumnField;
+import com.revature.util.ForeignKeyField;
+import com.revature.util.PrimaryKeyField;
+
+public class App {
+
+	public static void main(String[] args) {
+		 Class<?> clazz; // Table? Entity?
+		 PrimaryKeyField primaryKeyField;
+		 List<ColumnField> columnFields;
+		 List<ForeignKeyField> foreignKeyFields;
+		
+			
+			Field pk = new Field("");
+			
+			Class<?> c1 = primaryKeyField.getClass();
+			Field pk = c1.getDeclaredField("id");
+
+			PrimaryKeyField primaryKeyField = new PrimaryKeyField(Field pk);
+
+			ColumnField columnField = new ColumnField(null);
+			Class<?> c2 = new Class<?>;
+
+			ColumnField fn = new ColumnField(c2.getField("firstName"));
+			ColumnField ln = new ColumnField(c2.getField("lastName"));
+			ColumnField un = new ColumnField(c2.getField("username"));
+			ColumnField pw = new ColumnField(c2.getField("pwd"));
+
+			List<ColumnField> columnFields = new LinkedList<ColumnField>();
+
+			columnFields.add(fn);
+			columnFields.add(ln);
+			columnFields.add(un);
+			columnFields.add(pw);
+
+			System.out.println(columnFields.toString());
+
+			List<String> foreignKeyFields = new LinkedList<String>();
+
+		// TableDao tabDao = new TableDao();
+		// tabDao.createTable("users", primaryKeyField, columnFields, foreignKeyFields);
+
+	}
+
+//	
+//	private Class<?> clazz; // Table? Entity?
+//	private PrimaryKeyField primaryKeyField;
+//	private List<ColumnField> columnFields;
+//	private List<ForeignKeyField> foreignKeyFields;
+
+}

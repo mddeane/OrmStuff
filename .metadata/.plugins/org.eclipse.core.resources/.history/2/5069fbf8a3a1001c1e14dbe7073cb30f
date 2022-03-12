@@ -1,0 +1,11 @@
+package com.revature.util;
+
+/**
+ * This class extracts the fields marked with @Column annotation
+ * designed in com.revature.annoations
+ *
+ */
+
+public class ColumnField {
+
+}

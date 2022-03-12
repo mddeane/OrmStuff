@@ -1,0 +1,18 @@
+package com.revature.dao;
+
+import java.sql.Connection;
+
+import com.revature.util.ConnectionUtil;
+
+public class TableDao {
+
+	Connection conn = ConnectionUtil.getConnection();
+
+	
+	public int createTable() {
+		int result = 0;
+		
+		
+		return result;
+	}
+}

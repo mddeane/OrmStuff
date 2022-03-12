@@ -1,0 +1,24 @@
+package com.revature.util;
+
+import java.lang.reflect.Type;
+
+import com.revature.annotations.Entity;
+
+public class TableEntity {
+
+	private Type type;
+	 
+	public TableType(Type type) {
+		
+		if (type.getClass().getAnnotation(Table.class) == null) {
+			throw new IllegalStateException("Cannot create TableType object. Provided entity " + getName() + "is not annotated with @Table.");
+		}
+		
+		this.type = type;
+	}
+	
+	public String getName() {
+		return type.getTypeName();
+	}
+	
+}

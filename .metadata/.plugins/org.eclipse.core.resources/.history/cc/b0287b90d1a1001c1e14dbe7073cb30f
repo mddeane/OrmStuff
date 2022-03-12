@@ -1,0 +1,17 @@
+package com.revature.models;
+
+import java.io.Serializable;
+
+public class Account implements Serializable {
+
+	private int accountId;
+	private double balance;
+	private int userId;
+	boolean isActive;
+	public Account() {
+		
+	}
+	
+	
+	
+}

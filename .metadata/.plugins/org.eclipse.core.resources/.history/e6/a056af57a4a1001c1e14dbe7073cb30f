@@ -1,0 +1,22 @@
+package com.revature.util;
+
+import java.lang.reflect.Field;
+
+/**
+ * This class extracts the fields marked with @Column annotation
+ * designed in com.revature.annoations.
+ * Models the column that will be generated in the database.
+ *
+ */
+
+public class ColumnField {
+
+	private Field field; //from java.lang.reflect
+	
+	public ColumnField(Field field) {
+		if(field.getAnnotation((Column.class))) {
+			
+		}
+	}
+	
+}

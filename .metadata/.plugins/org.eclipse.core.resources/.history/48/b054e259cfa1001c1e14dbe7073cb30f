@@ -1,0 +1,10 @@
+package com.revature.dao;
+
+public interface IAccountDao {
+
+	int insert(Account e) {
+		
+	}
+
+	
+}

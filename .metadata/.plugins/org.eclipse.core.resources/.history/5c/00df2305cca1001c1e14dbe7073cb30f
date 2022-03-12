@@ -1,0 +1,7 @@
+package com.revature.util;
+
+public class ConnectionUtil {
+
+	Connection conn = new Connection;
+	
+}

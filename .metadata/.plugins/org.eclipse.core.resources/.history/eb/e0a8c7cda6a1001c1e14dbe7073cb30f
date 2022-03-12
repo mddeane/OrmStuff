@@ -1,0 +1,12 @@
+package com.revature.util;
+
+/**
+ * This class extracts the fields marked with @Entity annotation
+ * designed in com.revature.annoations.
+ * Models the entity that will be generated in the database.
+ *
+ */
+
+public class EntityModel {
+
+}

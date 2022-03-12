@@ -1,0 +1,43 @@
+package com.revature.main;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+
+import com.revature.models.Account;
+import com.revature.models.User;
+import com.revature.util.ColumnField;
+import com.revature.util.Configuration;
+import com.revature.util.MetaModel;
+
+public class App {
+
+	public static void main(String[] args) {
+
+		List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
+
+		Configuration cfg = new Configuration();
+
+		Configuration ormAnnotatedClasses = cfg.addAnnotatedClass(ormClasses);
+
+		System.out.println(ormAnnotatedClasses.toString());
+		
+		List<MetaModel<Class<?>>> ormMetaModels = ormAnnotatedClasses.getMetaModels();
+
+		System.out.println(ormMetaModels.toString());
+		
+		for (MetaModel<?> mm : cfg.getMetaModels()) {
+			System.out.println("Class: " + mm.getSimpleClassName());
+			System.out.println("Primary Key: " + mm.getPrimaryKey());
+			System.out.println("Columns: ");
+			for (ColumnField field : mm.getColumns()) {
+				System.out.println("\t Column: " + field.getName());
+			}
+			for (ForeignKeyFeild field : mm.getColumns()) {
+				
+			}
+		}
+
+	}
+
+}

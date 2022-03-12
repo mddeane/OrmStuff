@@ -1,0 +1,51 @@
+package com.revature.main;
+
+import java.lang.reflect.Field;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.revature.dao.TableDao;
+import com.revature.util.ColumnField;
+import com.revature.util.ForeignKeyField;
+import com.revature.util.PrimaryKeyField;
+
+public class App {
+
+	public static void main(String[] args) {
+
+		PrimaryKeyField primaryKeyField = new PrimaryKeyField(null);
+		Class<?> c1 = primaryKeyField.getClass();
+		Field pk = c1.getDeclaredField("id");
+		
+		
+		ColumnField columnField = new ColumnField(null); 
+		Class<?> c2 = columnField.getClass();
+
+		ColumnField fn = new ColumnField(c2.getField("firstName"));
+		ColumnField ln = new ColumnField(c2.getField("lastName")); 
+		ColumnField un = new ColumnField(c2.getField("username"));
+		ColumnField pw = new ColumnField(c2.getField("pwd"));
+
+		List<ColumnField> columnFields = new LinkedList<ColumnField>();
+		
+		columnFields.add(fn);
+		columnFields.add(ln);
+		columnFields.add(un);
+		columnFields.add(pw);
+		
+			
+		List<String> foreignKeyFields = new LinkedList<String>();
+		
+			
+		TableDao tabDao = new TableDao();
+		tabDao.createTable("users", primaryKeyField, columnFields, foreignKeyFields);
+			
+	}
+	
+	
+	private Class<?> clazz; // Table? Entity?
+	private PrimaryKeyField primaryKeyField;
+	private List<ColumnField> columnFields;
+	private List<ForeignKeyField> foreignKeyFields;
+
+}

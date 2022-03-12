@@ -1,0 +1,15 @@
+package com.revature.util;
+
+/**
+ * This class extracts the fields marked with @Column annotation
+ * designed in com.revature.annoations.
+ * Models the column that will be generated in the database.
+ *
+ */
+
+public class ColumnField {
+
+	private Field field;
+	
+	
+}

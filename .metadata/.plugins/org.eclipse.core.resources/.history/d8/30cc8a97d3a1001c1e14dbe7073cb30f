@@ -1,0 +1,15 @@
+package com.revature.dao;
+
+import com.revature.util.Configuration;
+
+public class TableDao {
+
+	public static Configuration conn = ConnectionUtil.getConnection();
+	
+	public int createTable() {
+		int result = 0;
+		
+		
+		return result;
+	}
+}

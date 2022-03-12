@@ -1,0 +1,114 @@
+package com.revature.util;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.Properties;
+
+public class ConnectionUtil {
+
+	private static Connection conn = null;
+
+	private ConnectionUtil() {
+
+	}
+
+	public static Connection getConnection() {
+
+		try {
+			if (conn != null && !conn.isClosed()) {
+				return conn;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		Properties prop = new Properties();
+
+		String url = "";
+		String username = "";
+		String password = "";
+
+		try {
+			prop.load(new FileReader(
+					"C:\\Users\\mddea\\OneDrive\\Desktop\\practice20220310\\TablePractice\\src\\main\\resources\\applications.properties"));
+
+			url = prop.getProperty("url");
+			username = prop.getProperty("username");
+			password = prop.getProperty("password");
+			conn = DriverManager.getConnection(url, username, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return conn;
+	}
+
+	public static void main(String[] args) {
+
+		try {
+			Connection conn = ConnectionUtil.getConnection();
+			//String sql = "SELECT * FROM public.basket_a";
+			
+//			String sql = "SELECT *\r\n"
+//					+ "FROM basket_a \r\n"
+//					+ "FULL OUTER JOIN basket_b\r\n"
+//					+ "ON fruit_a = fruit_b; \r\n"
+//					+ "";
+
+//			String sql = "INSERT INTO public.basket_b (b, fruit_b) VALUES (6, 'lemon')";
+	
+//			String sql = "INSERT INTO markd.users (username, pwd, user_role_name) VALUES (?, ?, ?) RETURNING markd.users.id";
+			String sql = "INSERT INTO public.basket_b (b, fruit_b) VALUES (7, ?)";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, "Lemon3");
+//			stmt.setString(2, "myPassword");
+//			stmt.setObject(3, "Admin", Types.OTHER);
+
+
+			System.out.println(sql);
+
+//			stmt.execute();
+			
+			stmt.execute();
+
+//			System.out.println("Added:\r\n"
+//								+ "\tFruit: " + fruitType
+//								+ "\tId: " + id
+//								+ "\tIn Table: " + tableName
+//								);
+			
+//			while (rs.next()) {
+//				String result = "";
+//
+//				if (rs.getString("fruit_a") != null) {
+//					result += rs.getString("fruit_a");
+//				} else if (rs.getString("fruit_b") != null) {
+//					result += rs.getString("fruit_b");
+//				} else {
+//					continue;
+//				}
+//				
+//				System.out.println(result);
+//			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,11 @@
+package com.revature.util;
+
+import java.util.List;
+
+public class Configuration {
+
+	private List<MetaModel<Class<?>>> metaModelList;
+	
+	private List<MetaModel<Class<?>>>
+	
+}

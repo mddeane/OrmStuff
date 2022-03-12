@@ -1,0 +1,20 @@
+package com.revature.util;
+
+import java.lang.reflect.Type;
+
+/**
+ * This class extracts the fields marked with @Entity annotation
+ * designed in com.revature.annoations.
+ * Models the entity that will be generated in the database.
+ *
+ */
+
+public class EntityModel {
+
+	private Type type;
+	 
+	public EntityModel() {
+		
+	}
+	
+}

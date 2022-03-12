@@ -1,0 +1,8 @@
+package com.revature.annotations;
+
+
+@Target(ElementType.FIELD)
+
+public @interface Column {
+
+}

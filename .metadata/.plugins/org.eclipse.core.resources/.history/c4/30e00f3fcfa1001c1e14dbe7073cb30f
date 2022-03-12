@@ -1,0 +1,11 @@
+package com.revature.dao;
+
+public interface IAccountDao {
+
+	@Override
+	public int insert(Account e) {
+		
+		return 0;
+	}
+	
+}

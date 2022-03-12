@@ -1,0 +1,48 @@
+package com.revature.util;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class ConnectionUtil {
+
+	private static Connection conn = new Connection();
+	
+	private ConnectionUtil() {
+		
+	}
+	
+	public static Connection ConnectionUtil() {
+
+		try {
+			if(conn != null && !conn.isClosed()) {
+				return conn;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Properties prop = new Properties();
+		
+		String url = "";
+		String username = "";
+		String password = "";
+		
+		try {
+			
+			FileReader loadFile = new FileReader(
+					
+					);
+			
+			prop.load(null);
+			
+		} catch () {
+			
+		}
+
+	
+	}
+	
+	
+	
+}

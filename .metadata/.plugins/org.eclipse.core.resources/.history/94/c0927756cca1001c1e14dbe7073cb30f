@@ -1,0 +1,25 @@
+package com.revature.util;
+
+import java.sql.Connection;
+
+public class ConnectionUtil {
+
+	private static Connection conn = new Connection();
+	
+	private ConnectionUtil() {
+		
+	}
+	
+	public static Connection ConnectionUtil() {
+
+	
+		String url = "";
+		String username = "";
+		String password = "";
+
+	
+	}
+	
+	
+	
+}
