@@ -19,7 +19,7 @@ public class TableDao {
 	
 	private String schemaName = "markd";
 
-  
+
 	//List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
 
 	public void getTableInfo(List<Class<?>> ormClasses) {
