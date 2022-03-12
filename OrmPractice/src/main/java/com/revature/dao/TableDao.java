@@ -41,18 +41,21 @@ public class TableDao {
 
 			System.out.println("Primary Key: " + mm.getPrimaryKey().getName());
 			System.out.println("\t Type: " + mm.getPrimaryKey().getType().getSimpleName());
-
+			System.out.println("\t SQL Type: " + getSQLType(mm));
+			
 			System.out.println("Columns: ");
 			for (ColumnField field : mm.getColumns()) {
 				System.out.println("\t Column: " + field.getName());
 				System.out.println("\t\t Type: " + field.getType().getSimpleName());
-
+				System.out.println("\t\t SQL Type: " + getSQLType(field));
+				getSQLType(field);
 			}
 			
 			try {
 				for (ForeignKeyField field : mm.getForeignKey()) {
 					System.out.println("\t Column: " + field.getName());
 					System.out.println("\t\t Type: " + field.getType().getSimpleName());
+					System.out.println("\t\t SQL Type: " + getSQLType(field));
 				}
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -63,9 +66,69 @@ public class TableDao {
 	}
 	
 	
+	public String getSQLType(MetaModel<?> mm) {
+		
+		String result = "";
+		
+		if (mm.getPrimaryKey().getClass()==PrimaryKeyField.class) {
+			result = "SERIAL";
+		} else {
+			result = null;
+		}
+		
+		return result;
+	}
+
+	public String getSQLType(ColumnField field) {
+		
+		String result = "'";
+		String type = field.getType().getSimpleName();
+		
+		if(type.equals("String")) {
+			result = "VARCHAR(50)";
+		} else if (type.equals("int")) {
+			result = "INTEGER";
+		} else if (type.equals("double")) {
+			result = "NUMERIC(50,2)";
+		} else if (type.equals("boolean")) {
+			result = "BOOLEAN";
+		} else {
+			result = null;
+		}
+		
+		return result;
+	}
+
+	public String getSQLType(ForeignKeyField field) {
+		
+		String result = "'";
+		String type = field.getType().getSimpleName();
+		
+		if(type.equals("String")) {
+			result = "VARCHAR(50)";
+		} else if (type.equals("int")) {
+			result = "INTEGER";
+		} else if (type.equals("double")) {
+			result = "NUMERIC(50,2)";
+		} else if (type.equals("boolean")) {
+			result = "BOOLEAN";
+		} else {
+			result = null;
+		}
+		
+		return result;
+	}
+	
+	
 	public int createTable(String tableName, PrimaryKeyField primaryKeyField, List<ColumnField> columnFields, List<ForeignKeyField> foreignKeyField) {
 		int result = 0;
 		return result;
 
 	}
+
+
+
+
+
+
 }

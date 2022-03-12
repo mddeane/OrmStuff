@@ -17,5 +17,4 @@ public @interface Column {
 	String columnName();
 	
 	
-	
 }
