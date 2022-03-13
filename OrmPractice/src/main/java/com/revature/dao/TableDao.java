@@ -1,6 +1,8 @@
 package com.revature.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,145 +20,118 @@ public class TableDao {
 
 	Connection conn = ConnectionUtil.getConnection();
 
-	private String schemaName = "markd";
-	String createTableSQL = "";
+	private String schemaName = "proj1";
 
-	// List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
-
-	public void getTableInfo(List<Class<?>> ormClasses) {
-
+	public String dropTables(List<Class<?>> ormClasses) {
 		Configuration cfg = new Configuration();
-
-		Configuration ormAnnotatedClasses = cfg.addAnnotatedClass(ormClasses);
-
-//		List<MetaModel<Class<?>>> ormMetaModels = ormAnnotatedClasses.getMetaModels();
-
-//		
-//		System.out.println("ormAnnotatedClasses: " + ormAnnotatedClasses.toString());
-
-//		System.out.println("ormMetaModels: " + ormMetaModels.toString());
-//
-//		System.out.println(ormMetaModels.size());
+		cfg.addAnnotatedClass(ormClasses);
+		String defineTableSQL = "";
 
 		for (MetaModel<?> mm : cfg.getMetaModels()) {
-//			System.out.println("Table name: " + mm.getEntityName());
+			// SQL statement to DROP table if exists
+			defineTableSQL += "DROP TABLE IF EXISTS " + schemaName + "." + mm.getEntityName() + " CASCADE;" + "\r\n";
+		}
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(defineTableSQL);
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return defineTableSQL;
+	}
 
-//			String primaryKey = "";
+	public String createTables(List<Class<?>> ormClasses) {
 
-			// SQL statement to DROP table if exists then CREATE table
-			createTableSQL = "DROP TABLE IF EXISTS " + schemaName + "." + mm.getEntityName() + " CASCADE;" + "\r\n"
-					+ "CREATE TABLE " + schemaName + "." + mm.getEntityName() + "(" + "\r\n";
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(ormClasses);
+		String defineTableSQL = "";
+
+		for (MetaModel<?> mm : cfg.getMetaModels()) {
+
+			// SQL statement to CREATE table
+			defineTableSQL += "CREATE TABLE " + schemaName + "." + mm.getEntityName() + "(" + "\r\n";
 
 			// SQL statement for primary key column if it exists
 			if (mm.getPrimaryKey().getName() != null) {
 
-				createTableSQL += "\t";
+				defineTableSQL += "\t";
 
-				createTableSQL += mm.getPrimaryKey().getColumnName();
+				defineTableSQL += mm.getPrimaryKey().getColumnName();
 
 				if (mm.getPrimaryKey().getIsSerial()) {
-					createTableSQL += " SERIAL";
+					defineTableSQL += " SERIAL";
 				}
 
 				if (mm.getPrimaryKey().getIsNullable() == false) {
-					createTableSQL += " NOT NULL";
+					defineTableSQL += " NOT NULL";
 				}
 
 				if (mm.getPrimaryKey().getIsUnique()) {
-					createTableSQL += " UNIQUE";
+					defineTableSQL += " UNIQUE";
 				}
 
-				createTableSQL += " PRIMARY KEY";
+				defineTableSQL += " PRIMARY KEY";
 			}
 
-			createTableSQL += ",\r\n";
+			defineTableSQL += ",\r\n";
 
 			// SQL statement for columns not a primary key or foreign key
 			// iterate through columns
 			for (ColumnField field : mm.getColumns()) {
 
-				createTableSQL += "\t" + field.getColumnName() + " " + getSQLType(field);
+				defineTableSQL += "\t" + field.getColumnName() + " " + getSQLType(field);
 
 				if (field.getIsSerial()) {
-					createTableSQL += " SERIAL";
+					defineTableSQL += " SERIAL";
 				}
 
 				if (field.getIsNullable() == false) {
-					createTableSQL += " NOT NULL";
+					defineTableSQL += " NOT NULL";
 				}
 
 				if (field.getIsUnique()) {
-					createTableSQL += " UNIQUE";
+					defineTableSQL += " UNIQUE";
 				}
-				createTableSQL += ",\r\n";
+				defineTableSQL += ",\r\n";
 			}
 
 			for (ForeignKeyField field : mm.getForeignKey()) {
-				createTableSQL += "\t" + field.getColumnName() + " " + getSQLType(field);
+				defineTableSQL += "\t" + field.getColumnName() + " " + getSQLType(field);
 
 				if (field.getIsSerial()) {
-					createTableSQL += " SERIAL";
+					defineTableSQL += " SERIAL";
 				}
 
 				if (field.getIsNullable() == false) {
-					createTableSQL += " NOT NULL";
+					defineTableSQL += " NOT NULL";
 				}
 
 				if (field.getIsUnique()) {
-					createTableSQL += " UNIQUE";
+					defineTableSQL += " UNIQUE";
 				}
-				createTableSQL += " FOREIGN KEY";
-				createTableSQL += ",\r\n";
+				//defineTableSQL += " FOREIGN KEY";
+				defineTableSQL += ",\r\n";
 			}
 
-			System.out.println(createTableSQL);
+			if (defineTableSQL.endsWith(",\r\n")) {
+				defineTableSQL = defineTableSQL.substring(0, (defineTableSQL.length()) - 3);
+			}
 
-//			if (mm.getColumns()!=null) {
-//				for (ColumnField field : mm.getColumns()) {
-//					System.out.println("\t Column: " + field.getName());
-//					System.out.println("\t\t Type: " + field.getType().getSimpleName());
-//					System.out.println("\t\t SQL Type: " + getSQLType(field));
-//					getSQLType(field);
-//				}
-//
-//				try {
-//					for (ForeignKeyField field : mm.getForeignKey()) {
-//						System.out.println("\t Column: " + field.getName());
-//						System.out.println("\t\t Type: " + field.getType().getSimpleName());
-//						System.out.println("\t\t SQL Type: " + getSQLType(field));
-//					}
-//				} catch (RuntimeException e) {
-//					e.printStackTrace();
-//				}				
-//				
-//			}
-
-			// System.out.println("entityName: " +
-			// mm.getClass().getAnnotation(Entity.class).entityName());
-
-//			System.out.println("Primary Key: " + mm.getPrimaryKey().getName());
-//			System.out.println(getSQLType(mm));
-//			String str = getSQLType(mm);
-
-//			System.out.println("Columns: ");
-//			for (ColumnField field : mm.getColumns()) {
-//				System.out.println("\t Column: " + field.getName());
-//				System.out.println("\t\t Type: " + field.getType().getSimpleName());
-//				System.out.println("\t\t SQL Type: " + getSQLType(field));
-//				getSQLType(field);
-//			}
-//
-//			try {
-//				for (ForeignKeyField field : mm.getForeignKey()) {
-//					System.out.println("\t Column: " + field.getName());
-//					System.out.println("\t\t Type: " + field.getType().getSimpleName());
-//					System.out.println("\t\t SQL Type: " + getSQLType(field));
-//				}
-//			} catch (RuntimeException e) {
-//				e.printStackTrace();
-//			}
+			defineTableSQL += "\r\n\t);\r\n";
+		}
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(defineTableSQL);
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}
 
+		return defineTableSQL;
 	}
 
 	public String getSQLType(MetaModel<?> mm) {
@@ -212,11 +187,13 @@ public class TableDao {
 		return result;
 	}
 
-	public int createTable(String tableName, PrimaryKeyField primaryKeyField, List<ColumnField> columnFields,
-			List<ForeignKeyField> foreignKeyField) {
-		int result = 0;
-		return result;
-
-	}
+//	public int createTable(String tableName, PrimaryKeyField primaryKeyField, List<ColumnField> columnFields,
+//			List<ForeignKeyField> foreignKeyField) {
+//		int result = 0;
+//		return result;
+//
+//	}
+	
+	
 
 }

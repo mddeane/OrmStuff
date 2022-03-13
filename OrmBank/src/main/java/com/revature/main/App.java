@@ -18,11 +18,7 @@ public class App {
 		List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
 		
 		TableDao tdao = new TableDao();
-		
-		tdao.getTableInfo(ormClasses);
-				
-				
-
+		System.out.println(tdao.dropTables(ormClasses));
+		System.out.println(tdao.createTables(ormClasses));
 	}
-
 }
