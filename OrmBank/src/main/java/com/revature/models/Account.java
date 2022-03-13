@@ -16,13 +16,12 @@ public class Account implements Serializable {
 	private int accountId;
 
 	@Column(columnName="balance")
-	@Default(defaultDouble=0)
 	private double balance;
 	
 	@JoinColumn(columnName="user_id")
 	private int userId;
 	
-	@Column(columnName="isActive")
+	@Column(columnName="is_active")
 	boolean isActive;
 	
 	public Account() {

@@ -27,5 +27,6 @@ public class EntityType {
 	public String getName() {
 		return type.getTypeName();
 	}
-	
+
+
 }

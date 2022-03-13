@@ -16,7 +16,7 @@ public @interface Column {
 
 	String columnName();
 	boolean isSerial() default false;
-	boolean isNullable() default false;
+	boolean isNullable() default true;
 	boolean isUnique() default false;
 
 	

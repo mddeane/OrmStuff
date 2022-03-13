@@ -40,7 +40,16 @@ public class PrimaryKeyField {
 	public boolean getIsSerial() {
 		return field.getAnnotation(Id.class).isSerial();
 	}
-//
+
+	public boolean getIsNullable() {
+		return field.getAnnotation(Id.class).isNullable();
+	}
+
+	public boolean getIsUnique() {
+		return field.getAnnotation(Id.class).isUnique();
+	}
+
+	//
 //	public boolean isDefault() {
 //		if (field.getAnnotation(Default.class) != null) { 
 //			return true;

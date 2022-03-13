@@ -36,6 +36,18 @@ public class ForeignKeyField {
 		return field.getAnnotation(JoinColumn.class).columnName();
 	}
 
+
+	public boolean getIsSerial() {
+		return field.getAnnotation(JoinColumn.class).isSerial();
+	}
+
+	public boolean getIsNullable() {
+		return field.getAnnotation(JoinColumn.class).isNullable();
+	}
+
+	public boolean getIsUnique() {
+		return field.getAnnotation(JoinColumn.class).isUnique();
+	}
 	
 	
 }

@@ -12,22 +12,19 @@ import com.revature.annotations.Column;
 @Entity(entityName="users")
 public class User implements Serializable {
 
-	@Id(columnName = "id")
+	@Id(columnName = "id", isSerial = true)
 	private int id;
 	
-	@Column(columnName = "firstName")
+	@Column(columnName = "first_name")
 	private String firstName;
 	
-	@Column(columnName = "lastName")
+	@Column(columnName = "last_name")
 	private String lastName;
 	
-	@Column(columnName = "username")
-	//@NotNull(isNotNull = true)
-	@Unique(isUnique = true)
+	@Column(columnName = "username", isUnique = true)
 	private String username;
 	
-	@Column(columnName = "pwd")
-	//@NotNull(isNotNull = true)
+	@Column(columnName = "pwd", isNullable = false)
 	private String password;
 	
 	public User() {

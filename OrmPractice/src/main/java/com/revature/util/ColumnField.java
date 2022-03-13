@@ -3,6 +3,7 @@ package com.revature.util;
 import java.lang.reflect.Field;
 
 import com.revature.annotations.Column;
+import com.revature.annotations.Id;
 
 /**
  * This class extracts the fields marked with @Column annotation
@@ -33,5 +34,18 @@ public class ColumnField {
 	
 	public String getColumnName() {
 		return field.getAnnotation(Column.class).columnName();
+	}
+	
+
+	public boolean getIsSerial() {
+		return field.getAnnotation(Column.class).isSerial();
+	}
+
+	public boolean getIsNullable() {
+		return field.getAnnotation(Column.class).isNullable();
+	}
+
+	public boolean getIsUnique() {
+		return field.getAnnotation(Column.class).isUnique();
 	}
 }
