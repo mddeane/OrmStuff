@@ -21,16 +21,22 @@ public class App {
 //		System.out.println(tdao.dropTables(ormClasses));
 //		System.out.println(tdao.createTables(ormClasses));
 		
-//		System.out.println(tdao.insertUser("users", "Bruce", "Wayne", "batman", "martha"));
+//		System.out.println(tdao.insertUser("users", "Diana", "Prince", "wonderwoman", "ww"));
 //		System.out.println(tdao.findUserIdByUsername("users","batman"));
 //
-//		System.out.println(tdao.insertAccount("accounts",1000000, true, 1));
+//		System.out.println(tdao.insertAccount("accounts",5000000, true, 1));
 
-		System.out.println(tdao.insertUser("users", "Peter", "Parker", "spiderman", "webs"));
-		int ppUserId = tdao.findUserIdByUsername("users", "spiderman"); 
-		System.out.println(tdao.insertAccount("accounts", 200, true, ppUserId));
+//		System.out.println(tdao.insertUser("users", "Peter", "Parker", "spiderman", "webs"));
+//		int ppUserId = tdao.findUserIdByUsername("users", "spiderman"); 
+//		System.out.println(tdao.insertAccount("accounts", 200, true, ppUserId));
 
-//		tdao.viewAll("users");
+//		System.out.println(tdao.findUserIdByAccountId("accounts", 2));
+	
+//		tdao.viewAllUsers();
+//		tdao.viewAllAccounts();
+		tdao.insertAccount("accounts", 1000000, false, tdao.findUserIdByUsername("users", "wonderwoman"));
+		
+		tdao.viewAllAccountsWithNameAndUsername();
 	}
 	
 }

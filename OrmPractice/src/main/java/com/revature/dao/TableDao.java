@@ -345,9 +345,10 @@ public class TableDao {
 	 * @return
 	 */
 	
-	public int viewAll(String tableName) {
+	public int viewAllUsers() {
 
 		int result = -1;
+		String tableName = "users";
 		try {
 			String sql = "SELECT * FROM " + schemaName + "." + tableName;
 
@@ -355,10 +356,16 @@ public class TableDao {
 
 			ResultSet rs = stmt.executeQuery();
 
+			System.out.println();			
+			System.out.println(tableName.toUpperCase());
+
 			printRowDivider();
 
 			System.out.println(
-					String.format("%-5s", "ID") + String.format("%-25s", "NAME") + String.format("%-20s", "USERNAME"));
+					String.format("%-5s", "ID") 
+					+ String.format("%-25s", "NAME") 
+					+ String.format("%-20s", "USERNAME")
+					);
 
 			printRowDivider();
 
@@ -368,7 +375,9 @@ public class TableDao {
 				String lastName = rs.getString("last_name");
 				String username = rs.getString("username");
 
-				System.out.println(String.format("%-5s", id) + String.format("%-25s", (firstName + " " + lastName))
+				System.out.println(
+						String.format("%-5s", id) 
+						+ String.format("%-25s", (firstName + " " + lastName))
 						+ String.format("%-20s", username));
 			}
 			printRowDivider();
@@ -386,6 +395,13 @@ public class TableDao {
 	 */
 	public void printRowDivider() {
 		for (int i = 0; i < 50; i++) {
+			System.out.print("=");
+		}
+		System.out.println("");
+	}
+
+	public void printRowDivider(int num) {
+		for (int i = 0; i < num; i++) {
 			System.out.print("=");
 		}
 		System.out.println("");
@@ -429,6 +445,13 @@ public class TableDao {
 
 		return primaryKey;
 	}
+	/**
+	 * Method fiends account id by the user id (owner of account). 
+	 * 
+	 * @param tableName
+	 * @param userId
+	 * @return
+	 */
 	
 	public int findAccountIdByUserId(String tableName, int userId) {
 		int accountId = -1;
@@ -449,5 +472,147 @@ public class TableDao {
 		}
 		return accountId;
 	}
+	
+	/**
+	 * Method finds the user id of the account owner by the account id. 
+	 * @param tableName
+	 * @param accountId
+	 * @return
+	 */
+	
+	public int findUserIdByAccountId(String tableName, int accountId) {
+		int userId = 0;
+		try {
+			String sql = "SELECT * FROM " + schemaName + "." + tableName + " WHERE account_id = ?";
 
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, accountId);
+
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				userId = rs.getInt("user_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userId;
+	}
+
+	/**
+	 * Method prints all accounts
+	 * Returns 1 if successful, -1 if not
+	 * 
+	 * @return
+	 */
+	
+	public int viewAllAccounts() {
+
+		int result = -1;
+		String tableName = "accounts";
+		try {
+			String sql = "SELECT * FROM " + schemaName + "." + tableName;
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery();
+
+			System.out.println();			
+			System.out.println(tableName.toUpperCase());
+				
+			printRowDivider();
+
+			System.out.println(
+					String.format("%-5s", "ID") 
+					+ String.format("%-20s", "BALANCE") 
+					+ String.format("%-15s", "STATUS")
+					+ String.format("%-5s", "USER ID")
+					);
+
+			printRowDivider();
+
+			while (rs.next()) {
+				int accountId = rs.getInt("account_id");
+				double balance = rs.getDouble("balance");
+				boolean isActive = rs.getBoolean("is_active");
+				int userId = rs.getInt("user_id");
+
+				System.out.println( 
+						String.format("%-5s", accountId) 
+						+ String.format("%-20.2f", balance) 
+						+ String.format("%-15s", (isActive ? "Active" : "Not Active"))
+						+ String.format("%-5s", userId));
+			}
+			printRowDivider();
+			
+			result = 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public int viewAllAccountsWithNameAndUsername() {
+		int result = -1;
+		String tableNameLeft = "accounts";
+		String tableNameRight = "users";
+		try {
+			String sql = "SELECT users.id, users.first_name, users.last_name, users.username, accounts.account_id, accounts.balance, accounts.is_active  \r\n"
+					+ "FROM " + schemaName + "." + tableNameLeft + "\r\n"
+					+ "INNER JOIN " + schemaName + "." + tableNameRight + "\r\n"
+					+ "ON users.id = accounts.user_id\r\n"
+					+ "ORDER BY accounts.account_id";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			System.out.println(sql);
+
+			ResultSet rs = stmt.executeQuery();
+
+			System.out.println();			
+			System.out.println(tableNameLeft.toUpperCase() + " AND " + tableNameRight.toUpperCase() );
+				
+			printRowDivider(105);
+
+			System.out.println(
+					String.format("%-10s", "ACC ID") 
+					+ String.format("%-20s", "BALANCE") 
+					+ String.format("%-15s", "STATUS")
+					+ String.format("%-10s", "USER ID") 
+					+ String.format("%-25s", "NAME") 
+					+ String.format("%-20s", "USERNAME")
+					);
+
+			printRowDivider(105);
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String firstName = rs.getString("first_name");
+				String lastName = rs.getString("last_name");
+				String username = rs.getString("username");
+				int accountId = rs.getInt("account_id");
+				double balance = rs.getDouble("balance");
+				boolean isActive = rs.getBoolean("is_active");
+
+				System.out.println( 
+						String.format("%-10s", accountId) 
+						+ String.format("%-20.2f", balance) 
+						+ String.format("%-15s", (isActive ? "Active" : "Not Active"))
+						+ String.format("%-10s", id) 
+						+ String.format("%-25s", (firstName + " " + lastName))
+						+ String.format("%-20s", username)
+						);
+			}
+			printRowDivider(105);
+			
+			result = 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
 }
