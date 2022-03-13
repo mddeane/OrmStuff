@@ -18,7 +18,19 @@ public class App {
 		List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
 		
 		TableDao tdao = new TableDao();
-		System.out.println(tdao.dropTables(ormClasses));
-		System.out.println(tdao.createTables(ormClasses));
+//		System.out.println(tdao.dropTables(ormClasses));
+//		System.out.println(tdao.createTables(ormClasses));
+		
+//		System.out.println(tdao.insertUser("users", "Bruce", "Wayne", "batman", "martha"));
+//		System.out.println(tdao.findUserIdByUsername("users","batman"));
+//
+//		System.out.println(tdao.insertAccount("accounts",1000000, true, 1));
+
+		System.out.println(tdao.insertUser("users", "Peter", "Parker", "spiderman", "webs"));
+		int ppUserId = tdao.findUserIdByUsername("users", "spiderman"); 
+		System.out.println(tdao.insertAccount("accounts", 200, true, ppUserId));
+
+//		tdao.viewAll("users");
 	}
+	
 }

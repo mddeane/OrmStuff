@@ -8,17 +8,14 @@
     <fullyQualifiedTypeName name="java.lang.Math"/>
     <fullyQualifiedTypeName name="java.lang.annotation.RetentionPolicy"/>
     <fullyQualifiedTypeName name="java.lang.annotation.ElementType"/>
-    <fullyQualifiedTypeName name="java.lang.reflect.Type"/>
     <fullyQualifiedTypeName name="java.lang.IllegalStateException"/>
     <fullyQualifiedTypeName name="com.revature.annotations.JoinColumn"/>
     <fullyQualifiedTypeName name="java.sql.DriverManager"/>
-    <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.io.Serializable"/>
     <fullyQualifiedTypeName name="java.util.LinkedList"/>
-    <fullyQualifiedTypeName name="java.lang.Exception"/>
     <fullyQualifiedTypeName name="com.revature.annotations.Entity"/>
     <fullyQualifiedTypeName name="com.revature.annotations.Id"/>
     <fullyQualifiedTypeName name="com.revature.util.Configuration"/>
@@ -33,4 +30,8 @@
     <fullyQualifiedTypeName name="com.revature.annotations.NotNull"/>
     <fullyQualifiedTypeName name="com.revature.annotations.Unique"/>
     <fullyQualifiedTypeName name="com.revature.annotations.Default"/>
+    <fullyQualifiedTypeName name="com.revature.util.EntityType"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Type"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
 </qualifiedTypeNameHistroy>
