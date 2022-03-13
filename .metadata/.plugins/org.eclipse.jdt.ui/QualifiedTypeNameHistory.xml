@@ -18,8 +18,6 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.io.Serializable"/>
     <fullyQualifiedTypeName name="java.util.LinkedList"/>
-    <fullyQualifiedTypeName name="com.revature.util.PrimaryKeyField"/>
-    <fullyQualifiedTypeName name="com.revature.util.ColumnField"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
     <fullyQualifiedTypeName name="com.revature.annotations.Entity"/>
     <fullyQualifiedTypeName name="com.revature.annotations.Id"/>
@@ -28,4 +26,11 @@
     <fullyQualifiedTypeName name="com.revature.models.Account"/>
     <fullyQualifiedTypeName name="java.lang.reflect.Field"/>
     <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="com.revature.dao.TableDao"/>
+    <fullyQualifiedTypeName name="com.revature.util.PrimaryKeyField"/>
+    <fullyQualifiedTypeName name="com.revature.util.ColumnField"/>
+    <fullyQualifiedTypeName name="com.revature.util.ForeignKeyField"/>
+    <fullyQualifiedTypeName name="com.revature.annotations.NotNull"/>
+    <fullyQualifiedTypeName name="com.revature.annotations.Unique"/>
+    <fullyQualifiedTypeName name="com.revature.annotations.Default"/>
 </qualifiedTypeNameHistroy>

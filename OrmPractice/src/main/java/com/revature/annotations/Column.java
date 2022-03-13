@@ -15,6 +15,9 @@ import java.lang.annotation.Target;
 public @interface Column {
 
 	String columnName();
-	
+	boolean isSerial() default false;
+	boolean isNullable() default false;
+	boolean isUnique() default false;
+
 	
 }

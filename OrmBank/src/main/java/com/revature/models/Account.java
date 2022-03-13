@@ -6,15 +6,17 @@ import java.util.Objects;
 import com.revature.annotations.Entity;
 import com.revature.annotations.Id;
 import com.revature.annotations.Column;
+import com.revature.annotations.Default;
 import com.revature.annotations.JoinColumn;
 
 @Entity(entityName = "accounts")
 public class Account implements Serializable {
 
-	@Id(columnName="account_id")
+	@Id(columnName="account_id", isSerial=true)
 	private int accountId;
 
 	@Column(columnName="balance")
+	@Default(defaultDouble=0)
 	private double balance;
 	
 	@JoinColumn(columnName="user_id")

@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import com.revature.annotations.Entity;
 import com.revature.annotations.Id;
+import com.revature.annotations.NotNull;
+import com.revature.annotations.Unique;
 import com.revature.annotations.Column;
 
 @Entity(entityName="users")
@@ -20,9 +22,12 @@ public class User implements Serializable {
 	private String lastName;
 	
 	@Column(columnName = "username")
+	//@NotNull(isNotNull = true)
+	@Unique(isUnique = true)
 	private String username;
 	
 	@Column(columnName = "pwd")
+	//@NotNull(isNotNull = true)
 	private String password;
 	
 	public User() {

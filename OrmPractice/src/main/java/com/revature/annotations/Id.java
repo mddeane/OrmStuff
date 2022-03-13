@@ -16,5 +16,8 @@ import java.lang.annotation.Target;
 public @interface Id {
 
 	String columnName();
+	boolean isSerial() default false;
+	boolean isNullable() default true;
+	boolean isUnique() default false;
 	
 }

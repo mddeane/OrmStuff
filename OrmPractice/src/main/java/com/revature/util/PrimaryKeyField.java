@@ -2,6 +2,7 @@ package com.revature.util;
 
 import java.lang.reflect.Field;
 
+import com.revature.annotations.Default;
 import com.revature.annotations.Id;
 
 /**
@@ -35,5 +36,26 @@ public class PrimaryKeyField {
 	public String getColumnName() {
 		return field.getAnnotation(Id.class).columnName();
 	}
+
+	public boolean getIsSerial() {
+		return field.getAnnotation(Id.class).isSerial();
+	}
+//
+//	public boolean isDefault() {
+//		if (field.getAnnotation(Default.class) != null) { 
+//			return true;
+//		}
+//		return false;
+//	}
+
+//	public boolean isSerial() {
+//		if (field.getAnnotation(Serial.class) != null) { 
+//			return true;
+//		}
+//		return false;
+//	}
+	
+	
+
 
 }

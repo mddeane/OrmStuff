@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.revature.annotations.Column;
+import com.revature.annotations.Default;
 import com.revature.annotations.Entity;
 import com.revature.annotations.Id;
 import com.revature.annotations.JoinColumn;
@@ -21,7 +22,18 @@ public class MetaModel<T> {
 	private List<ColumnField> columnFields;
 	private List<ForeignKeyField> foreignKeyFields;
 	
+//****************************
+/*	
+	private DefaultField defaultField;
+	private CheckField checkField;
+	private NotNullField notNullField;
+	private UniqueField UniqueField;
 	
+	private TableType tableType;
+	
+
+*/
+//****************************
 	
 	public static MetaModel<Class<?>> of(Class<?> clazz) {
 		
@@ -67,7 +79,7 @@ public class MetaModel<T> {
 		
 		for (Field field : fields) {
 			Id primaryKey = field.getAnnotation(Id.class);
-			
+
 			if (primaryKey != null) {
 				this.primaryKeyField = new PrimaryKeyField(field);
 				return primaryKeyField;

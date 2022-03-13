@@ -15,5 +15,9 @@ import java.lang.annotation.Target;
 public @interface Entity {
 
 	String entityName(); 
+	boolean isSerial() default false;
+	boolean isNullable() default true;
+	boolean isUnique() default false;
+
 	
 }

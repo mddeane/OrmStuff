@@ -15,5 +15,9 @@ import java.lang.annotation.Target;
 public @interface Table {
 
 	String tableName();
+	boolean isSerial() default false;
+	boolean isNullable() default true;
+	boolean isUnique() default false;
+
 	
 }

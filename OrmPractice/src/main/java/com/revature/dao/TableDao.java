@@ -16,33 +16,35 @@ import com.revature.util.PrimaryKeyField;
 public class TableDao {
 
 	Connection conn = ConnectionUtil.getConnection();
-	
+
 	private String schemaName = "markd";
-  
-  
-	//List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
+
+	// List<Class<?>> ormClasses = Arrays.asList(Account.class, User.class);
 
 	public void getTableInfo(List<Class<?>> ormClasses) {
-
 
 		Configuration cfg = new Configuration();
 
 		Configuration ormAnnotatedClasses = cfg.addAnnotatedClass(ormClasses);
 
 		System.out.println(ormAnnotatedClasses.toString());
-		
+
 		List<MetaModel<Class<?>>> ormMetaModels = ormAnnotatedClasses.getMetaModels();
 
 		System.out.println(ormMetaModels.toString());
-		
+
 		for (MetaModel<?> mm : cfg.getMetaModels()) {
-			
+
 			System.out.println("Table: " + mm.getSimpleClassName());
 
 			System.out.println("Primary Key: " + mm.getPrimaryKey().getName());
-			System.out.println("\t Type: " + mm.getPrimaryKey().getType().getSimpleName());
-			System.out.println("\t SQL Type: " + getSQLType(mm));
-			
+			System.out.println(getSQLType(mm));
+			String str = getSQLType(mm);
+
+			if (mm.getPrimaryKey().getIsSerial()) {
+				System.out.println("\t SERIAL");
+			}
+
 			System.out.println("Columns: ");
 			for (ColumnField field : mm.getColumns()) {
 				System.out.println("\t Column: " + field.getName());
@@ -50,7 +52,7 @@ public class TableDao {
 				System.out.println("\t\t SQL Type: " + getSQLType(field));
 				getSQLType(field);
 			}
-			
+
 			try {
 				for (ForeignKeyField field : mm.getForeignKey()) {
 					System.out.println("\t Column: " + field.getName());
@@ -62,29 +64,27 @@ public class TableDao {
 			}
 		}
 
-
 	}
-	
-	
+
 	public String getSQLType(MetaModel<?> mm) {
-		
+
 		String result = "";
-		
-		if (mm.getPrimaryKey().getClass()==PrimaryKeyField.class) {
-			result = "SERIAL";
+
+		if (mm.getPrimaryKey().getClass() == PrimaryKeyField.class) {
+			result = "";
 		} else {
 			result = null;
 		}
-		
+
 		return result;
 	}
 
 	public String getSQLType(ColumnField field) {
-		
+
 		String result = "'";
 		String type = field.getType().getSimpleName();
-		
-		if(type.equals("String")) {
+
+		if (type.equals("String")) {
 			result = "VARCHAR(50)";
 		} else if (type.equals("int")) {
 			result = "INTEGER";
@@ -95,16 +95,16 @@ public class TableDao {
 		} else {
 			result = null;
 		}
-		
+
 		return result;
 	}
 
 	public String getSQLType(ForeignKeyField field) {
-		
+
 		String result = "'";
 		String type = field.getType().getSimpleName();
-		
-		if(type.equals("String")) {
+
+		if (type.equals("String")) {
 			result = "VARCHAR(50)";
 		} else if (type.equals("int")) {
 			result = "INTEGER";
@@ -115,20 +115,15 @@ public class TableDao {
 		} else {
 			result = null;
 		}
-		
+
 		return result;
 	}
-	
-	
-	public int createTable(String tableName, PrimaryKeyField primaryKeyField, List<ColumnField> columnFields, List<ForeignKeyField> foreignKeyField) {
+
+	public int createTable(String tableName, PrimaryKeyField primaryKeyField, List<ColumnField> columnFields,
+			List<ForeignKeyField> foreignKeyField) {
 		int result = 0;
 		return result;
 
 	}
-
-
-
-
-
 
 }
