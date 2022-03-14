@@ -313,6 +313,9 @@ public class TableDao {
 		for (MetaModel<?> mm : cfg.getMetaModels()) {
 			String classEntityName = clazz.getAnnotation(Entity.class).entityName();
 			String tableEntityName = mm.getEntityName();
+			
+			System.out.println("classEntityName: " + classEntityName);
+			System.out.println("tableEntityName: " + tableEntityName);
 
 			if (classEntityName.equals(tableEntityName)) {
 				tableName = tableEntityName;
