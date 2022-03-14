@@ -28,7 +28,7 @@ public class Account implements Serializable {
 		
 	}
 
-	public Account(int accountId, double balance, int userId, boolean isActive) {
+	public Account(int accountId, double balance, boolean isActive, int userId) {
 		super();
 		this.accountId = accountId;
 		this.balance = balance;
@@ -36,7 +36,7 @@ public class Account implements Serializable {
 		this.isActive = isActive;
 	}
 	
-	public Account(double balance, int userId, boolean isActive) {
+	public Account(double balance, boolean isActive, int userId) {
 		super();
 		this.balance = balance;
 		this.userId = userId;
