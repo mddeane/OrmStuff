@@ -170,7 +170,7 @@ public class TableDao {
 
 		return defineTableSQL;
 	}
-	
+
 	/**
 	 * Method converts the field type into variable type for SQL. Returns String SQL
 	 * version of the java type For primary key, not relevant if serial.
@@ -313,9 +313,6 @@ public class TableDao {
 		for (MetaModel<?> mm : cfg.getMetaModels()) {
 			String classEntityName = clazz.getAnnotation(Entity.class).entityName();
 			String tableEntityName = mm.getEntityName();
-			
-			System.out.println("classEntityName: " + classEntityName);
-			System.out.println("tableEntityName: " + tableEntityName);
 
 			if (classEntityName.equals(tableEntityName)) {
 				tableName = tableEntityName;
@@ -334,7 +331,7 @@ public class TableDao {
 							}
 						}
 					} catch (Exception e) {
-
+						// System.out.println("Couldn't find Id annotation");
 					}
 				}
 				for (Field field : fields) {
@@ -345,7 +342,7 @@ public class TableDao {
 							variables.add(field.getName());
 						}
 					} catch (Exception e) {
-
+						// System.out.println("Couldn't find Column annotation");
 					}
 				}
 				for (Field field : fields) {
@@ -356,12 +353,12 @@ public class TableDao {
 							variables.add(field.getName());
 						}
 					} catch (Exception e) {
-
+						// System.out.println("Couldn't find JoinColumn annotation");
 					}
 				}
 				break;
 			} else {
-				System.out.println("Couldn't find table");
+				// System.out.println("Couldn't find table");
 			}
 		}
 
@@ -395,33 +392,35 @@ public class TableDao {
 					try {
 						stmt.setString(i + 1, val);
 					} catch (Exception e) {
-						System.out.println("Prep String");
+						// System.out.println("Prep String");
 					}
 				} else if (cl.getSimpleName().equals("Integer")) {
 					try {
 						stmt.setInt(i + 1, Integer.parseInt(val));
 					} catch (Exception e) {
-						System.out.println("Prep Integer");
+						// System.out.println("Prep Integer");
 					}
 				} else if ((cl.getSimpleName().equals("Double"))) {
 					try {
 						stmt.setDouble(i + 1, Double.parseDouble(val));
 					} catch (Exception e) {
-						System.out.println("Prep Double");
+						// System.out.println("Prep Double");
 					}
 				} else if (cl.getSimpleName().equals("Boolean")) {
 					try {
 						stmt.setBoolean(i + 1, Boolean.parseBoolean(val));
 					} catch (Exception e) {
-						System.out.println("Prep Boolean");
+						// System.out.println("Prep Boolean");
 					}
 				}
 			}
 
 			int num = stmt.executeUpdate();
+			primaryKey = 1;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			primaryKey = -1;
 		}
 		return primaryKey;
 
@@ -539,7 +538,6 @@ public class TableDao {
 
 		defineUserSQL = "SELECT * FROM " + schemaName + "." + tableName + " WHERE id = ?";
 
-		
 		try {
 			PreparedStatement stmt = conn.prepareStatement(defineUserSQL);
 
@@ -563,25 +561,22 @@ public class TableDao {
 				String username = rs.getString("username");
 
 				System.out.println(String.format("%-10s", id) + String.format("%-25s", (firstName + " " + lastName))
-				+ String.format("%-20s", username));
+						+ String.format("%-20s", username));
 
 				result = 1;
 			} else {
 				System.out.println("Couldn't find user.");
 			}
-			
+
 			printRowDivider();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		
 		return result;
 	}
-	
-	
-	
+
 	/**
 	 * method prints a row of equal signs to separate rows
 	 */
@@ -752,8 +747,6 @@ public class TableDao {
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 
-//			System.out.println(sql);
-
 			ResultSet rs = stmt.executeQuery();
 
 			System.out.println();
@@ -789,5 +782,133 @@ public class TableDao {
 
 		return result;
 	}
+
+	/**
+	 * Method deletes a row in a table. Takes in list of classes which are
+	 * annotated, the class that that corresponds to the table where the row to be
+	 * deleted exists, and the primary key of the row.
+	 * 
+	 * @param ormClasses
+	 * @param clazz
+	 * @param rowId
+	 * @return
+	 */
+
+	public int deleteRow(List<Class<?>> ormClasses, Class<?> clazz, int rowId) {
+		int result = 0;
+
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(ormClasses);
+
+		String tableName;
+
+		String deleteRowSQL = "";
+
+		for (MetaModel<?> mm : cfg.getMetaModels()) {
+
+			String classEntityName = clazz.getAnnotation(Entity.class).entityName();
+			String tableEntityName = mm.getEntityName();
+
+			try {
+
+				if (classEntityName.equals(tableEntityName)) {
+					tableName = tableEntityName;
+					String primaryKeyColumn = "";
+
+					Field[] fields = clazz.getDeclaredFields();
+
+					// iterate through columns and get column names
+
+					for (Field field : fields) {
+						try {
+							if (field != null) {
+								Id column = field.getAnnotation(Id.class);
+								primaryKeyColumn = column.columnName();
+							}
+						} catch (Exception e) {
+							// System.out.println("Couldn't find Id annotation");
+						}
+					}
+
+					// SQL statement to DELETE row if exists
+
+					deleteRowSQL += "DELETE FROM " + schemaName + "." + tableName + " WHERE " + primaryKeyColumn
+							+ " = ?";
+
+					PreparedStatement stmt = conn.prepareStatement(deleteRowSQL);
+
+					stmt.setInt(1, rowId);
+
+					result = stmt.executeUpdate();
+					System.out.println(stmt);
+					return result;
+				}
+			} catch (Exception e) {
+				System.out.println("Couldn't find table " + classEntityName);
+				result = -1;
+			}
+		}
+
+		return result;
+	}
+
+	public int updateRow(List<Class<?>> ormClasses, Class<?> clazz, int rowId, String columnName, Object newValue) {
+		int result = 0;
+		
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(ormClasses);
+
+		String tableName;
+		String newValueType = newValue.getClass().getSimpleName();
+		String newValueSQL;
+		if (newValueType.equals("String")) {
+			newValueSQL = "'" + newValue.toString() + "'";
+		} else {
+			newValueSQL = newValue.toString();
+		}
+				
+		String updateRowSQL = "";
+
+		for (MetaModel<?> mm : cfg.getMetaModels()) {
+			
+			String classEntityName = clazz.getAnnotation(Entity.class).entityName();
+			String tableEntityName = mm.getEntityName();
+
+			try {
+
+				if (classEntityName.equals(tableEntityName)) {
+					tableName = tableEntityName;
+					String primaryKeyColumn = "";
+
+					Field[] fields = clazz.getDeclaredFields();
+
+					// iterate through primary key columns and get primary key column name for SQL
+
+					for (Field field : fields) {
+						try {
+							if (field != null) {
+								Id column = field.getAnnotation(Id.class);
+								primaryKeyColumn = column.columnName();
+							}
+						} catch (Exception e) {
+							// System.out.println("Couldn't find Id annotation");
+						}
+					}
+					
+					updateRowSQL += "UPDATE " + schemaName + "." + tableName + " SET " 
+										+ columnName + " = " + newValueSQL + " WHERE " + primaryKeyColumn + " = " + rowId; 
+					
+					PreparedStatement stmt = conn.prepareStatement(updateRowSQL);
+					result = stmt.executeUpdate();
+				}
+			} catch (Exception e) {
+				result = -1;
+			}
+		}
+		return result;
+	}
+
+
+
 
 }

@@ -41,11 +41,11 @@ public class App {
 
 		
 //		List<Object> values = new ArrayList<Object>();
-//		values.add("Bruce");
-//		values.add("Wayne");
-//		values.add("batman");
-//		values.add("martha");
-
+//		values.add("Mark");
+//		values.add("Deane");
+//		values.add("mdd");
+//		values.add("1234");
+//
 //		System.out.println(tdao.insert(ormClasses, User.class, values));
 
 		
@@ -60,17 +60,24 @@ public class App {
 		 */
 
 //		List<Object> values = new ArrayList<Object>();
-//		values.add(5000000);
+//		values.add(200);
 //		values.add(true);
-//		values.add(1);
+//		values.add(8);
 //
 //		System.out.println(tdao.insert(ormClasses, Account.class, values));
 
+
+		/**
+		 * delete a row 
+		 */
+		
+//		System.out.println(tdao.deleteRow(ormClasses, Account.class, 5));
+		
 		/**
 		 * viewAllAccountsWithNameAndUsername views a join of accounts with their users 
 		 */
-		
-		tdao.viewAllAccountsWithNameAndUsername();
+
+//		tdao.viewAllAccountsWithNameAndUsername();
 
 
 		/**
@@ -78,13 +85,13 @@ public class App {
 		 * 
 		 */
 		
-		tdao.viewAllUsers();
+//		tdao.viewAllUsers();
 
 		/**
 		 * viewAllAccounts views all accounts
 		 */
 		
-		tdao.viewAllAccounts();
+//		tdao.viewAllAccounts();
 		
 		
 
@@ -128,7 +135,8 @@ public class App {
 
 		
 //		tdao.viewRow(User.class, 2);
-		
+	
+		tdao.updateRow(ormClasses, Account.class, 3, "balance", 4000);
 	}
 	
 }
